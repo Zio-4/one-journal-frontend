@@ -1,23 +1,48 @@
-import logo from './logo.svg';
 import './App.css';
+import {Switch, Route, Redirect} from 'react-router-dom'
+import Header from './Components/Header'
+import NavBar from './Components/NavBar'
+import Login from './Components/Login'
+import SignUp from './Components/SignUp'
+import Homepage from './Components/Homepage'
+import JournalPage from './Components/JournalPage';
+import JournalPostPage from './Components/JournalPostPage';
+import NewJournal from './Components/NewJournal';
+import NewJournalPost from './Components/NewJournalPost';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Switch>
+        <Header />
+        <NavBar />
+          <Route path='/newpost'>
+            <NewJournalPost />
+          </Route>
+          <Route path='/newjournal'>
+            <NewJournal />
+          </Route>
+          <Route path='/journal/:id/post/:id'>
+            <JournalPostPage />
+          </Route>
+          <Route path='/journal/:id'>
+            <JournalPage />
+          </Route>
+          <Route path='/'>
+            <Homepage />
+          </Route>
+          <Route path='/signup'>
+            <SignUp />
+          </Route>
+          <Route path='/login'>
+            <Login />
+          </Route>
+          <Route path="*">
+            <h1>404 not found</h1>
+            <Redirect from="*" to="/home" />
+          </Route> 
+        </Switch>
     </div>
   );
 }
