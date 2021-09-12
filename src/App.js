@@ -9,38 +9,48 @@ import JournalPage from './Components/JournalPage';
 import JournalPostPage from './Components/JournalPostPage';
 import NewJournal from './Components/NewJournal';
 import NewJournalPost from './Components/NewJournalPost';
+import {useEffect} from 'react'
 
 
 function App() {
+
+  useEffect(() => {
+    fetch("/journal_posts")
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+    })
+}, [])
+
   return (
     <div className="App">
-        <Switch>
         <Header />
         <NavBar />
-          <Route path='/newpost'>
+        <Switch>
+          <Route exact path='/newpost'>
             <NewJournalPost />
           </Route>
-          <Route path='/newjournal'>
+          <Route exact path='/newjournal'>
             <NewJournal />
           </Route>
-          <Route path='/journal/:id/post/:id'>
+          <Route exact path='/journal/:id/post/:id'>
             <JournalPostPage />
           </Route>
-          <Route path='/journal/:id'>
+          <Route exact path='/journal/:id'>
             <JournalPage />
           </Route>
-          <Route path='/'>
+          <Route exact path='/'>
             <Homepage />
           </Route>
-          <Route path='/signup'>
+          <Route exact path='/signup'>
             <SignUp />
           </Route>
-          <Route path='/login'>
+          <Route exact path='/login'>
             <Login />
           </Route>
           <Route path="*">
             <h1>404 not found</h1>
-            <Redirect from="*" to="/home" />
+            <Redirect from="*" to="/" />
           </Route> 
         </Switch>
     </div>
