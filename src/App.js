@@ -9,34 +9,28 @@ import JournalPage from './Components/JournalPage';
 import JournalPostPage from './Components/JournalPostPage';
 import NewJournal from './Components/NewJournal';
 import NewJournalPost from './Components/NewJournalPost';
-import {useEffect} from 'react'
+
 
 
 function App() {
 
-  useEffect(() => {
-    fetch("/journal_posts")
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-    })
-}, [])
+
 
   return (
     <div className="App">
         <Header />
         <NavBar />
         <Switch>
-          <Route exact path='/newpost'>
+          <Route exact path='/journals/:id/journal_posts/new'>
             <NewJournalPost />
           </Route>
-          <Route exact path='/newjournal'>
+          <Route exact path='/journals/new'>
             <NewJournal />
           </Route>
-          <Route exact path='/journal/:id/post/:id'>
+          <Route exact path='/journals/:jid/journal_posts/:id'>
             <JournalPostPage />
           </Route>
-          <Route exact path='/journal/:id'>
+          <Route exact path='/journals/:id'>
             <JournalPage />
           </Route>
           <Route exact path='/'>

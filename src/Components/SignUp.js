@@ -1,37 +1,37 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 function SignUp() {
     return (
         <form>
-            <div class="ui middle aligned center aligned grid">
-                <div class="column">
-                    <h2 class="ui orange header">
-                        <div class="content">
+            <div className="ui middle aligned center aligned grid">
+                <div className="column">
+                    <h2 className="ui orange header">
+                        <div className="content">
                             Create a new account
                         </div>
                     </h2>
-                    <form class="ui large form">
-                        <div class="ui stacked segment">
-                            <div class="field">
+                    <form className="ui large form">
+                        <div className="ui stacked segment">
+                            <div className="field">
                                     <input type="text" name="username" placeholder="Username"/>
                             </div>
-                            <div class="field">
+                            <div className="field">
                                 <input type="password" name="password" placeholder="Password"/>
                             </div>
-                            <div class="field">
+                            <div className="field">
                                 <input type="password" name="confirm-password" placeholder="Confirm Password"/>
                             </div>
-                            <div class="field">
+                            <div className="field">
                                 <input type="text" name="person-name" placeholder="First Name"/>
                             </div>
-                            <div class="ui fluid large orange submit button">Sign Up</div>
+                            <div className="ui fluid large orange submit button">Sign Up</div>
                         </div>
 
-                        <div class="ui error message"></div>
+                        <div className="ui error message"></div>
                     </form>
-
-                    <div class="ui message">
-                        Already have an account? <a href="#"> Sign In</a>
+                    <div className="ui message">
+                        Already have an account? <Link to='/login'>Sign In</Link>
                     </div>
                 </div>
             </div>
