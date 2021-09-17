@@ -10,7 +10,7 @@ function NewJournalPost() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        
             <div className="ui middle aligned center aligned grid">
                 <div className="column">
                     <h2 className="ui orange header">
@@ -18,7 +18,7 @@ function NewJournalPost() {
                             New journal post
                         </div>
                     </h2>
-                    <form className="ui large form">
+                    <form className="ui large form" onSubmit={handleSubmit}>
                         <div className="ui stacked segment">
                             <div className="field">
                                 <input type="text" name="post-name" placeholder="Post Title (Optional)"/>
@@ -34,7 +34,7 @@ function NewJournalPost() {
                     </form>
                 </div>
             </div>
-        </form>
+        
     )
 }
 

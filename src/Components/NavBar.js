@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 function NavBar() {
     return (
         <div className="ui secondary pointing menu">
-            <Link to='/' className="ui item">
+            <Link to='/home' className="ui item">
                 Home 
             </Link>
                 <div className="right menu">

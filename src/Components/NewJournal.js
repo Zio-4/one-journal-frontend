@@ -1,8 +1,42 @@
-import React from 'react'
+import {useState} from 'react'
 
 function NewJournal() {
+    const [form, setForm] = useState({
+        title: "",
+        description: ""
+    })
+
+    function handleChange(e) {
+        setForm({...form, [e.target.name]: e.target.value})
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        fetch("/journals", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(form),
+        })
+          .then((r) => {
+            if (r.ok) {
+              r.json().then((data) => {
+                addNewPassword(data);
+                setForm({
+                    title: "",
+                    description: ""
+                });
+              });
+            } else {
+              r.json().then((err) => setErrors(err.errors));
+            }
+          })
+    }
+
     return (
-        <form>
+        <div>
             <div className="ui middle aligned center aligned grid">
                 <div className="column">
                     <h2 className="ui orange header">
@@ -10,23 +44,22 @@ function NewJournal() {
                             New journal
                         </div>
                     </h2>
-                    <form className="ui large form">
+                    <form className="ui large form" onSubmit={handleSubmit}>
                         <div className="ui stacked segment">
                             <div className="field">
-                                <input type="text" name="journal-name" placeholder="Journal Name"/>
+                                <input type="text" name="journal-name" placeholder="Journal Name" onChange={handleChange}/>
                             </div>
                             <div className="field">
-                                <textarea placeholder="description" rows="2"/>
+                                <textarea placeholder="description" rows="2" onChange={handleChange}/>
                             </div>
                             <div className="ui fluid large orange submit button">Create</div>
                         </div>
 
-                        <div className="ui error message">test</div>
-
+                        <div className="ui error message">{errors.length > 0 ? errors.map((error) => <p>{error}</p>) : null}</div>
                     </form>
                 </div>
             </div>
-        </form>
+        </div>
     )
 }
 

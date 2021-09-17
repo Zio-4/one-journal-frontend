@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {useParams} from 'react-router-dom'
+import {useParams, Link} from 'react-router-dom'
 import JournalPosts from './JournalPosts'
 
 
@@ -22,6 +22,7 @@ function JournalPage() {
     return (
         <>
             <h2>Journal: {journal.title}</h2>
+            <Link to={`/journals/${params.id}/journal_posts/new`}><input type="button" className="ui orange button" value="New Journal Post"/></Link>
             {renderedJournalPosts} 
         </>
     )

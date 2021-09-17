@@ -1,5 +1,5 @@
 import './App.css';
-import {Switch, Route, Redirect} from 'react-router-dom'
+import {Switch, Route, Redirect, useEffect} from 'react-router-dom'
 import Header from './Components/Header'
 import NavBar from './Components/NavBar'
 import Login from './Components/Login'
@@ -9,12 +9,59 @@ import JournalPage from './Components/JournalPage';
 import JournalPostPage from './Components/JournalPostPage';
 import NewJournal from './Components/NewJournal';
 import NewJournalPost from './Components/NewJournalPost';
+import {useState} from 'react'
 
 
 
 function App() {
+  const [errors, setErrors] = useState([])
+  const [user, setUser] = useState("")
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [journals, setJournals] = useState([])
 
+  useEffect(() => {
+    fetch("/journals")
+    .then(res => res.json())
+    .then(data => {
+      setJournals(data)
+    })
+}, [])
 
+  useEffect(() => {
+    fetch("/user").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => {
+          keepUserLoggedIn(user)
+          clearErrors()
+        })
+      } else {
+        r.json().then((err) => setErrors(err.errors))
+      }
+    })
+  }, []);
+
+  function clearErrors() {
+    setErrors([])
+  }
+
+  function keepUserLoggedIn(user) {
+    setUser(user);
+    setLoggedIn(true);
+  }
+
+  function onLogin(user) {
+    setUser(user)
+    setLoggedIn(true)
+  }
+
+  function onLogout() {
+    setUser("")
+    setLoggedIn(false)
+  }
+
+  function addJournal(j) {
+
+  }
 
   return (
     <div className="App">
@@ -25,7 +72,7 @@ function App() {
             <NewJournalPost />
           </Route>
           <Route exact path='/journals/new'>
-            <NewJournal />
+            <NewJournal addJournal={addJournal}/>
           </Route>
           <Route exact path='/journals/:jid/journal_posts/:id'>
             <JournalPostPage />
@@ -34,13 +81,13 @@ function App() {
             <JournalPage />
           </Route>
           <Route exact path='/'>
-            <Homepage />
+            {loggedIn ? <Redirect to="/home" /> : <Login onLogin={onLogin} clearErrors={clearErrors}/>}
+          </Route>
+          <Route exact path='/home'>
+            <Homepage user={user} onLogout={onLogout} journals={journals}/>
           </Route>
           <Route exact path='/signup'>
-            <SignUp />
-          </Route>
-          <Route exact path='/login'>
-            <Login />
+            <SignUp onLogin={onLogin}/>
           </Route>
           <Route path="*">
             <h1>404 not found</h1>
