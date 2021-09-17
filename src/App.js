@@ -1,5 +1,5 @@
 import './App.css';
-import {Switch, Route, Redirect, useEffect} from 'react-router-dom'
+import {Switch, Route, Redirect} from 'react-router-dom'
 import Header from './Components/Header'
 import NavBar from './Components/NavBar'
 import Login from './Components/Login'
@@ -9,7 +9,7 @@ import JournalPage from './Components/JournalPage';
 import JournalPostPage from './Components/JournalPostPage';
 import NewJournal from './Components/NewJournal';
 import NewJournalPost from './Components/NewJournalPost';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
 
 
@@ -19,13 +19,6 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [journals, setJournals] = useState([])
 
-  useEffect(() => {
-    fetch("/journals")
-    .then(res => res.json())
-    .then(data => {
-      setJournals(data)
-    })
-}, [])
 
   useEffect(() => {
     fetch("/user").then((r) => {
@@ -39,6 +32,8 @@ function App() {
       }
     })
   }, []);
+
+  if (!user) return <Login onLogin={setUser} clearErrors={clearErrors}/>; 
 
   function clearErrors() {
     setErrors([])
@@ -63,28 +58,27 @@ function App() {
     setJournals((mUJ) => [...mUJ, newJ])
   }
 
+
+
   return (
     <div className="App">
         <Header />
         <NavBar />
         <Switch>
           <Route exact path='/journals/:id/journal_posts/new'>
-            <NewJournalPost />
+            <NewJournalPost user={user}/>
           </Route>
           <Route exact path='/journals/new'>
-            <NewJournal addJournal={addJournal}/>
+            <NewJournal addJournal={addJournal} user={user}/>
           </Route>
           <Route exact path='/journals/:jid/journal_posts/:id'>
-            <JournalPostPage />
+            <JournalPostPage user={user}/>
           </Route>
           <Route exact path='/journals/:id'>
             <JournalPage />
           </Route>
           <Route exact path='/'>
-            {loggedIn ? <Redirect to="/home" /> : <Login onLogin={onLogin} clearErrors={clearErrors}/>}
-          </Route>
-          <Route exact path='/home'>
-            <Homepage user={user} onLogout={onLogout} journals={journals}/>
+            <Homepage user={user} onLogout={onLogout} setJournals={setJournals} journals={journals}/>
           </Route>
           <Route exact path='/signup'>
             <SignUp onLogin={onLogin}/>

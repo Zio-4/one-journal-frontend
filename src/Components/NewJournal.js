@@ -21,7 +21,11 @@ function NewJournal({addJournal}) {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          body: JSON.stringify(form),
+          body: JSON.stringify({
+              title: form.title,
+              description: form.description,
+              user_id: user.id
+          }),
         })
           .then((r) => {
             if (r.ok) {
