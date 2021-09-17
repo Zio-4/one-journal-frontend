@@ -59,8 +59,8 @@ function App() {
     setLoggedIn(false)
   }
 
-  function addJournal(j) {
-
+  function addJournal(newJ) { 
+    setJournals((mUJ) => [...mUJ, newJ])
   }
 
   return (

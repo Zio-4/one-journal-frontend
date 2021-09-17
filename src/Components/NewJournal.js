@@ -1,10 +1,13 @@
 import {useState} from 'react'
+import {useHistory} from 'react-router-dom'
 
-function NewJournal() {
+function NewJournal({addJournal}) {
+    const [errors, setErrors] = useState([])
     const [form, setForm] = useState({
         title: "",
         description: ""
     })
+    const history = useHistory()
 
     function handleChange(e) {
         setForm({...form, [e.target.name]: e.target.value})
@@ -23,11 +26,12 @@ function NewJournal() {
           .then((r) => {
             if (r.ok) {
               r.json().then((data) => {
-                addNewPassword(data);
+                addJournal(data);
                 setForm({
                     title: "",
                     description: ""
                 });
+                history.push(`/journals/${data.id}`)
               });
             } else {
               r.json().then((err) => setErrors(err.errors));
