@@ -1,7 +1,8 @@
 import {useState} from 'react'
 import {useHistory} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 
-function NewJournal({addJournal}) {
+function NewJournal({addJournal, user}) {
     const [errors, setErrors] = useState([])
     const [form, setForm] = useState({
         title: "",
@@ -37,12 +38,16 @@ function NewJournal({addJournal}) {
                 });
                 history.push(`/journals/${data.id}`)
               });
+              
             } else {
               r.json().then((err) => setErrors(err.errors));
             }
           })
     }
 
+    if (!user) {
+        return <Redirect to="/login" /> 
+    }
     return (
         <div>
             <div className="ui middle aligned center aligned grid">
@@ -60,13 +65,12 @@ function NewJournal({addJournal}) {
                             <div className="field">
                                 <textarea placeholder="description" rows="2" onChange={handleChange}/>
                             </div>
-                            <div className="ui fluid large orange submit button">Create</div>
+                            <button className="ui fluid large orange submit button">Create</button>
                         </div>
-
-                        <div className="ui error message">{errors.length > 0 ? errors.map((error) => <p>{error}</p>) : null}</div>
                     </form>
                 </div>
             </div>
+            <div className="ui error message">{errors.length > 0 ? errors.map((error) => <p>{error}</p>) : null}</div>
         </div>
     )
 }

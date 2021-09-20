@@ -1,7 +1,11 @@
 import {Link} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 
-function JournalPosts({title, date, summary, postID, journalID}) {
+function JournalPosts({title, date, summary, postID, journalID, user}) {
 
+    if (!user) {
+        return <Redirect to="/login" /> 
+    }
     return (
             <div className="ui segment">
                 <Link to={`/journals/${journalID}/journal_posts/${postID}`}> <h2 className="ui left floated header">{title}</h2> 

@@ -1,14 +1,19 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import { useState } from "react"
+import {Redirect, useHistory} from 'react-router-dom'
 
-function Login({onLogin, clearErrors}) {
+
+function Login({onLogin, clearErrors, user}) {
+    const history = useHistory()
     const [errors, setErrors] = useState([])
     const [form, setForm] = useState({
         username: "",
         password: ""
     })
 
+    console.log("user in login:", user)
+    
     function handleInput(e) {
         e.preventDefault()
         setForm({
@@ -28,7 +33,10 @@ function Login({onLogin, clearErrors}) {
             body: JSON.stringify(form)
         }).then((r) => {
             if (r.ok) {
-                r.json().then((user) => onLogin(user))
+                r.json().then((user) => {
+                    console.log("user in login:", user)
+                    onLogin(user)})
+                    history.push("/")
             } else {
                 r.json().then((err) => {
                     setErrors(err.errors)
@@ -37,8 +45,12 @@ function Login({onLogin, clearErrors}) {
         })
     }
 
-
+    if (user) {
+        console.log("redirecting from login component")
+        return <Redirect to="/" /> 
+    }
     return (
+        <div>
         <form>
             <div className="ui middle aligned center aligned grid">
                 <div className="column">
@@ -58,14 +70,10 @@ function Login({onLogin, clearErrors}) {
                             <div className="field">
                             <div className="ui left icon input">
                                 <i className="lock icon"></i>
-                                <input type="password" name="password" placeholder="Password" value={form.username} onChange={handleInput}/>
+                                <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleInput}/>
                             </div>
                             </div>
-                            <div className="ui fluid large orange submit button">Login</div>
-                        </div>
-
-                        <div className="ui error message">
-                            {errors.length > 0 ? errors.map((error) => <h3>{error}</h3>) : null}
+                            <button className="ui fluid large orange submit button">Login</button>
                         </div>
 
                     </form>
@@ -76,6 +84,10 @@ function Login({onLogin, clearErrors}) {
                 </div>
             </div>
         </form>
+            <div className="ui error message">
+                {errors.length > 0 ? errors.map((error) => <h3>{error}</h3>) : null}
+            </div>
+        </div>
     )
 }
 

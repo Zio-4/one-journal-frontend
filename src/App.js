@@ -10,48 +10,50 @@ import JournalPostPage from './Components/JournalPostPage';
 import NewJournal from './Components/NewJournal';
 import NewJournalPost from './Components/NewJournalPost';
 import {useState, useEffect} from 'react'
+import Loading from './Components/Loading';
 
 
 
 function App() {
   const [errors, setErrors] = useState([])
-  const [user, setUser] = useState("")
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [user, setUser] = useState(false)
   const [journals, setJournals] = useState([])
+  const [loading, setLoading] = useState(true)
 
 
   useEffect(() => {
-    fetch("/user").then((r) => {
+    fetch("/currentuser").then((r) => {
       if (r.ok) {
         r.json().then((user) => {
+          console.log("user in use effect:", user)
           keepUserLoggedIn(user)
+          setLoading(false)
           clearErrors()
         })
       } else {
-        r.json().then((err) => setErrors(err.errors))
+        r.json().then((err) => {
+          setErrors(err.errors)
+          setLoading(false)
+        })
       }
     })
   }, []);
 
-  if (!user) return <Login onLogin={setUser} clearErrors={clearErrors}/>; 
 
   function clearErrors() {
     setErrors([])
   }
 
   function keepUserLoggedIn(user) {
-    setUser(user);
-    setLoggedIn(true);
+    setUser(user)
   }
 
   function onLogin(user) {
     setUser(user)
-    setLoggedIn(true)
   }
 
   function onLogout() {
     setUser("")
-    setLoggedIn(false)
   }
 
   function addJournal(newJ) { 
@@ -62,11 +64,13 @@ function App() {
 
   return (
     <div className="App">
+      {loading ? <Loading /> :
+      <>
         <Header />
-        <NavBar />
+        {user ? <NavBar onLogout={onLogout}/> : null}
         <Switch>
           <Route exact path='/journals/:id/journal_posts/new'>
-            <NewJournalPost user={user}/>
+            <NewJournalPost user={user} />
           </Route>
           <Route exact path='/journals/new'>
             <NewJournal addJournal={addJournal} user={user}/>
@@ -75,19 +79,23 @@ function App() {
             <JournalPostPage user={user}/>
           </Route>
           <Route exact path='/journals/:id'>
-            <JournalPage />
+            <JournalPage user={user}/>
+          </Route>
+          <Route exact path='/login'>
+            <Login onLogin={setUser} clearErrors={clearErrors} user={user}/>
           </Route>
           <Route exact path='/'>
             <Homepage user={user} onLogout={onLogout} setJournals={setJournals} journals={journals}/>
           </Route>
           <Route exact path='/signup'>
-            <SignUp onLogin={onLogin}/>
+            <SignUp onLogin={onLogin} user={user}/>
           </Route>
           <Route path="*">
             <h1>404 not found</h1>
             <Redirect from="*" to="/" />
           </Route> 
-        </Switch>
+        </Switch> 
+      </>}
     </div>
   );
 }

@@ -1,11 +1,12 @@
 import {useState} from 'react'
 import {Link, useHistory} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 
-function SignUp({onLogin}) {
+function SignUp({onLogin, user}) {
     const history = useHistory()
     const [errors, setErrors] = useState([])
     const [form, setForm] = useState({
-        personName: "",
+        name: "",
         username: "",
         password: "",
         password_confirmation: ""
@@ -20,26 +21,41 @@ function SignUp({onLogin}) {
 
       function handleSubmit(e) {
         e.preventDefault()
-        fetch('/signup', {
+        fetch("/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify(form)
+            body: JSON.stringify({
+                name: form.name,
+                username: form.username,
+                password: form.password,
+                password_confirmation: form.password_confirmation
+            })
         }).then((r) => {
                 if (r.ok) {
-                r.json().then((data) => onLogin(data))
-                history.push("/home")
+                r.json().then((data) => {
+                    console.log("Sign up data:", data)
+                    onLogin(data)
+                    setForm({
+                        name: "",
+                        username: "",
+                        password: "",
+                        password_confirmation: ""
+                    })})
+                history.push("/")
                 } else {
                 r.json().then((err) => setErrors(err.errors))
             }
         })
     }
 
-
+    if (user) {
+        return <Redirect to="/" /> 
+    }
     return (
-        <form>
+        <div>
             <div className="ui middle aligned center aligned grid">
                 <div className="column">
                     <h2 className="ui orange header">
@@ -57,24 +73,25 @@ function SignUp({onLogin}) {
                                 <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange}/>
                             </div>
                             <div className="field">
-                                <input type="password" name="confirm-password" placeholder="Confirm Password" value={form.password_confirmation} onChange={handleChange}/>
+                                <input type="password" name="password_confirmation" placeholder="Confirm Password" value={form.password_confirmation} onChange={handleChange}/>
                             </div>
                             <div className="field">
-                                <input type="text" name="personName" placeholder="First Name" value={form.personName} onChange={handleChange}/>
+                                <input type="text" name="name" placeholder="First Name" value={form.personName} onChange={handleChange}/>
                             </div>
-                            <div className="ui fluid large orange submit button">Sign Up</div>
+                            <button className="ui fluid large orange submit button">Sign Up</button>
                         </div>
 
-                        <div className="ui error message">
-                            {(errors.length > 0) ? errors.map((error) => <p>{error}</p>) : null}
-                        </div>
+                        
                     </form>
                     <div className="ui message">
                         Already have an account? <Link to='/login'>Sign In</Link>
                     </div>
                 </div>
             </div>
-        </form>
+               {errors.length > 0 ? <div className="ui error message">
+                    {(errors.length > 0) ? errors.map((error) => <p>{error}</p>) : null}
+                 </div> : null}
+        </div>
     )
 }
 

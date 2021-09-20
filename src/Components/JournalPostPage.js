@@ -1,7 +1,8 @@
 import {useParams, useHistory} from 'react-router-dom'
 import {useEffect, useState} from 'react'
+import {Redirect} from 'react-router-dom'
 
-function JournalPostPage() {
+function JournalPostPage({user}) {
     const params = useParams()
     let { jid } = useParams()
     let { id } = useParams()
@@ -18,6 +19,10 @@ function JournalPostPage() {
     })
 }, [])
 
+    if (!user) {
+        return <Redirect to="/login" /> 
+    }
+    
     if (!journalPost) return <h2>Loading...</h2>
 
     function handleClick() {
@@ -27,6 +32,7 @@ function JournalPostPage() {
 
     const {title, post_date, content} = journalPost
    
+
     return (
         <>
             <input className="ui orange button" type="button" value="Back to Journal" onClick={handleClick}/>

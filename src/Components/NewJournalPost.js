@@ -1,8 +1,11 @@
-import React from 'react'
-import {useParams} from 'react-router-dom'
+import {useState} from 'react'
+import {useParams, useHistory} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 
-function NewJournalPost({user}) {
+function NewJournalPost({user, addJournalPost}) {
     const params = useParams()
+    const history = useHistory()
+    const [errors, setErrors] = useState([])
     const [form, setForm] = useState({
         title: "",
         content: ""
@@ -12,6 +15,7 @@ function NewJournalPost({user}) {
         setForm({...form, [e.target.name]: e.target.value})
     }
 
+    // user.id for journal_id?
     function handleSubmit(e) {
         e.preventDefault()
         fetch("/journal_posts", {
@@ -29,20 +33,23 @@ function NewJournalPost({user}) {
           .then((r) => {
             if (r.ok) {
               r.json().then((data) => {
-                addJournal(data);
                 setForm({
                     title: "",
                     description: ""
-                });
-                history.push(`/journals/${data.id}`)
+                });     
               });
+              //history.push(`/journals/${data.id}`)
             } else {
               r.json().then((err) => setErrors(err.errors));
             }
           })
     }
 
+    if (!user) {
+        return <Redirect to="/login" /> 
+    }
     return (
+        <div>
             <div className="ui middle aligned center aligned grid">
                 <div className="column">
                     <h2 className="ui orange header">
@@ -58,14 +65,13 @@ function NewJournalPost({user}) {
                             <div className="field">
                                 <textarea placeholder="Content" name="content" rows="2" onChange={handleChange}/>
                             </div>
-                            <div className="ui fluid large orange submit button">Post</div>
-                        </div>
-
-                        <div className="ui error message">test</div>
-
+                            <button className="ui fluid large orange submit button">Post</button>
+                        </div>                        
                     </form>
                 </div>
             </div>
+            <div className="ui error message">{errors.length > 0 ? errors.map((error) => <p>{error}</p>) : null}</div>
+        </div>
     )
 }
 
