@@ -15,6 +15,7 @@ function NewJournalPost({user, addJournalPost}) {
         setForm({...form, [e.target.name]: e.target.value})
     }
 
+
     // user.id for journal_id?
     function handleSubmit(e) {
         e.preventDefault()
@@ -27,7 +28,7 @@ function NewJournalPost({user, addJournalPost}) {
           body: JSON.stringify({
               title: form.title,
               content: form.title,
-              journal_id: user.id
+              journal_id: params.id
           }),
         })
           .then((r) => {
@@ -35,10 +36,10 @@ function NewJournalPost({user, addJournalPost}) {
               r.json().then((data) => {
                 setForm({
                     title: "",
-                    description: ""
+                    content: ""
                 });     
               });
-              //history.push(`/journals/${data.id}`)
+              history.push(`/journals/${params.id}`)
             } else {
               r.json().then((err) => setErrors(err.errors));
             }
@@ -65,12 +66,12 @@ function NewJournalPost({user, addJournalPost}) {
                             <div className="field">
                                 <textarea placeholder="Content" name="content" rows="2" onChange={handleChange}/>
                             </div>
-                            <button className="ui fluid large orange submit button">Post</button>
+                            <button className="ui fluid large orange submit button" type="submit">Post</button>
                         </div>                        
                     </form>
                 </div>
             </div>
-            <div className="ui error message">{errors.length > 0 ? errors.map((error) => <p>{error}</p>) : null}</div>
+            {errors.length > 0 ? <div className="ui error message">{errors.length > 0 ? errors.map((error) => <p>{error}</p>) : null}</div> : null}
         </div>
     )
 }

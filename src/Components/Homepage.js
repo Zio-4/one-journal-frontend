@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {Redirect} from 'react-router-dom'
 
-function Homepage({user, onLogout, setJournals, journals}) {
+function Homepage({user, onLogout, setJournals, journals, deleteJournal}) {
     const date = new Date()
 
     useEffect(() => {
@@ -18,11 +18,11 @@ function Homepage({user, onLogout, setJournals, journals}) {
   console.log("user in homepage:", user)
   
 
-    const renderedJournals = journals.map(j => <Journals key={j.id} title={j.title} description={j.description} id={j.id}/>)
+    const renderedJournals = journals.map(j => <Journals key={j.id} title={j.title} description={j.description} id={j.id} deleteJournal={deleteJournal}/>)
 
-    // if (!//user) {
-    //     return <Redirect to="/login" /> 
-    // }
+    if (!user) {
+        return <Redirect to="/login" /> 
+    }
     return (
        <>
         <h2>How was your day today, {user.name}?</h2>

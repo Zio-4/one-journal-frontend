@@ -53,11 +53,16 @@ function App() {
   }
 
   function onLogout() {
-    setUser("")
+    setUser(false)
   }
 
   function addJournal(newJ) { 
     setJournals((mUJ) => [...mUJ, newJ])
+  }
+
+  function deleteJournal(id) {
+    const updateJournals = journals.filter(j => j.id !== id)
+    setJournals(updateJournals)
   }
 
 
@@ -85,7 +90,7 @@ function App() {
             <Login onLogin={setUser} clearErrors={clearErrors} user={user}/>
           </Route>
           <Route exact path='/'>
-            <Homepage user={user} onLogout={onLogout} setJournals={setJournals} journals={journals}/>
+            <Homepage user={user} onLogout={onLogout} setJournals={setJournals} journals={journals} deleteJournal={deleteJournal}/>
           </Route>
           <Route exact path='/signup'>
             <SignUp onLogin={onLogin} user={user}/>

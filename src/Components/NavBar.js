@@ -9,7 +9,7 @@ function NavBar({onLogout, user}) {
             method: "DELETE"
         })
         onLogout()
-        history.push("/")
+        history.push("/login")
     }
 
     return (
@@ -18,7 +18,7 @@ function NavBar({onLogout, user}) {
                 Home 
             </Link>
                 <div className="right menu">
-                    <button className="ui item" onClick={logoutUser}>
+                    <button className="ui yellow button" onClick={logoutUser}>
                         Logout
                     </button>
                 </div>

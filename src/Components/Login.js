@@ -13,9 +13,8 @@ function Login({onLogin, clearErrors, user}) {
     })
 
     console.log("user in login:", user)
-    
+
     function handleInput(e) {
-        e.preventDefault()
         setForm({
             ...form,
             [e.target.name]: e.target.value
@@ -50,8 +49,7 @@ function Login({onLogin, clearErrors, user}) {
         return <Redirect to="/" /> 
     }
     return (
-        <div>
-        <form>
+        <>
             <div className="ui middle aligned center aligned grid">
                 <div className="column">
                     <h2 className="ui orange header">
@@ -73,9 +71,8 @@ function Login({onLogin, clearErrors, user}) {
                                 <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleInput}/>
                             </div>
                             </div>
-                            <button className="ui fluid large orange submit button">Login</button>
+                            <button className="ui fluid large orange submit button" type="submit">Login</button>
                         </div>
-
                     </form>
 
                     <div className="ui message">
@@ -83,11 +80,10 @@ function Login({onLogin, clearErrors, user}) {
                     </div>
                 </div>
             </div>
-        </form>
-            <div className="ui error message">
+            {errors.length > 0 ? <div className="ui error message">
                 {errors.length > 0 ? errors.map((error) => <h3>{error}</h3>) : null}
-            </div>
-        </div>
+            </div> : null}
+        </>
     )
 }
 

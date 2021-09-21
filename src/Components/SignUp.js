@@ -78,7 +78,7 @@ function SignUp({onLogin, user}) {
                             <div className="field">
                                 <input type="text" name="name" placeholder="First Name" value={form.personName} onChange={handleChange}/>
                             </div>
-                            <button className="ui fluid large orange submit button">Sign Up</button>
+                            <button className="ui fluid large orange submit button" type="submit">Sign Up</button>
                         </div>
 
                         
