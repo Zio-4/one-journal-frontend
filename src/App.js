@@ -11,6 +11,7 @@ import NewJournal from './Components/NewJournal';
 import NewJournalPost from './Components/NewJournalPost';
 import {useState, useEffect} from 'react'
 import Loading from './Components/Loading';
+import UpdateJournal from './Components/UpdateJournal';
 
 
 
@@ -25,7 +26,6 @@ function App() {
     fetch("/currentuser").then((r) => {
       if (r.ok) {
         r.json().then((user) => {
-          console.log("user in use effect:", user)
           keepUserLoggedIn(user)
           setLoading(false)
           clearErrors()
@@ -85,6 +85,9 @@ function App() {
           </Route>
           <Route exact path='/journals/:id'>
             <JournalPage user={user}/>
+          </Route>
+          <Route exact path='/journals/:id/update'>
+            <UpdateJournal clearErrors={clearErrors}/>
           </Route>
           <Route exact path='/login'>
             <Login onLogin={setUser} clearErrors={clearErrors} user={user}/>

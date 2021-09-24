@@ -2,6 +2,7 @@ import Journals from './Journals'
 import {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {Redirect} from 'react-router-dom'
+import Loading from './Loading'
 
 function Homepage({user, onLogout, setJournals, journals, deleteJournal}) {
     const date = new Date()
@@ -10,12 +11,11 @@ function Homepage({user, onLogout, setJournals, journals, deleteJournal}) {
       fetch("/journals")
       .then(res => res.json())
       .then(data => {
-        console.log("journals:", data)
         setJournals(data)
       })
   }, [])
 
-  console.log("user in homepage:", user)
+    if (!journals) return <Loading />
   
 
     const renderedJournals = journals.map(j => <Journals key={j.id} title={j.title} description={j.description} id={j.id} deleteJournal={deleteJournal}/>)

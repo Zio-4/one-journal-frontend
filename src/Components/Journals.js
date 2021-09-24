@@ -11,12 +11,17 @@ function Journals({id, title, description, user, deleteJournal}) {
         deleteJournal(id)
     }
 
+    function handleUpdate() {
+
+    }
+
     return (
             <div className="ui segment">
                 <Link to={`/journals/${id}`}> <h2 className="ui left floated header">{title}</h2> 
                 <div className="ui clearing divider"></div></Link> 
                 <p className="ui left floated paragraph">{description}</p>
-                <button className="ui red button" onClick={handleDelete}>Delete</button>
+                <Link to={`journals/${id}/update`}><button className="ui green button">Update</button></Link>
+                <button className="ui red button" onClick={handleDelete}>Delete</button>          
             </div>         
     )
 }

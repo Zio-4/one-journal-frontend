@@ -12,8 +12,6 @@ function Login({onLogin, clearErrors, user}) {
         password: ""
     })
 
-    console.log("user in login:", user)
-
     function handleInput(e) {
         setForm({
             ...form,
