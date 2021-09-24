@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from "react"
 import {useHistory, useParams} from 'react-router-dom'
+import Loading from './Loading'
 
 function UpdateJournal({clearErrors}) {
     const history = useHistory()
@@ -8,7 +9,7 @@ function UpdateJournal({clearErrors}) {
     const [journal, setJournal] = useState(null)
     const params = useParams()
     const [form, setForm] = useState({
-        username: "",
+        title: "",
         description: ""
     })
 
@@ -16,10 +17,13 @@ function UpdateJournal({clearErrors}) {
         fetch(`/journals/${params.id}`)
         .then(r => r.json())
         .then(data => {
-            console.log("use effect", journal)
             setJournal(data)
         })
     }, [params.id])
+
+    if (!journal) return <Loading />
+
+    const {title, description} = journal
 
 
     function handleChange(e) {
@@ -30,8 +34,33 @@ function UpdateJournal({clearErrors}) {
         clearErrors()
     }
 
-    function handleSubmit() {
-
+    function handleSubmit(e) {
+        e.preventDefault()
+        fetch(`/journals/${params.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                title: form.title || {title},
+                description: form.description || {description}
+            })
+        })
+            .then(r => {
+                if (r.ok) {
+                    console.log("RES", r)
+                    r.json().then((data) => {
+                        setForm({
+                            title: "",
+                            description: "" 
+                        })
+                    })
+                    history.push("/")
+                } else {
+                    r.json().then((err) =>
+                        setErrors(err))
+            }
+        })
     }
 
 
@@ -47,11 +76,10 @@ function UpdateJournal({clearErrors}) {
                     <form className="ui large form" onSubmit={handleSubmit}>
                         <div className="ui stacked segment">
                             <div className="field">
-                                <input type="text" name="title" value={form.title}  onChange={handleChange}/>
-                                {console.log("JSX return")}
+                                <input type="text" name="title" value={form.title} placeholder={title}  onChange={handleChange}/>
                             </div>
                             <div className="field">
-                                <textarea  name="description" rows="2" value={form.description} onChange={handleChange}/>
+                                <textarea  name="description" rows="2" value={form.description} placeholder={description} onChange={handleChange}/>
                             </div>
                             <button className="ui fluid large orange submit button">Update</button>
                         </div>
@@ -64,9 +92,3 @@ function UpdateJournal({clearErrors}) {
 }
 
 export default UpdateJournal
-
-
-// placeholder={`${journal.title}`}  placeholder={`${journal.description}`}
-
-
-//How do i get journal keys for placeholders? useEffect happens after returning of the JSX
