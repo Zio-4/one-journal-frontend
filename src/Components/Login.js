@@ -31,7 +31,6 @@ function Login({onLogin, clearErrors, user}) {
         }).then((r) => {
             if (r.ok) {
                 r.json().then((user) => {
-                    console.log("user in login:", user)
                     onLogin(user)})
                     history.push("/")
             } else {
@@ -43,7 +42,6 @@ function Login({onLogin, clearErrors, user}) {
     }
 
     if (user) {
-        console.log("redirecting from login component")
         return <Redirect to="/" /> 
     }
     return (
