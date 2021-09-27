@@ -1,10 +1,10 @@
 import Journals from './Journals'
-import {useEffect, useState} from 'react'
+import {useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import {Redirect} from 'react-router-dom'
 import Loading from './Loading'
 
-function Homepage({user, onLogout, setJournals, journals, deleteJournal}) {
+function Homepage({user, setJournals, journals, deleteJournal}) {
     const date = new Date()
 
     useEffect(() => {
@@ -35,3 +35,5 @@ function Homepage({user, onLogout, setJournals, journals, deleteJournal}) {
 }
 
 export default Homepage
+
+

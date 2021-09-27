@@ -93,7 +93,7 @@ function App() {
             <Login onLogin={setUser} clearErrors={clearErrors} user={user}/>
           </Route>
           <Route exact path='/'>
-            <Homepage user={user} onLogout={onLogout} setJournals={setJournals} journals={journals} deleteJournal={deleteJournal}/>
+            <Homepage user={user} setJournals={setJournals} journals={journals} deleteJournal={deleteJournal}/>
           </Route>
           <Route exact path='/signup'>
             <SignUp onLogin={onLogin} user={user}/>

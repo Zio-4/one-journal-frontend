@@ -1,18 +1,13 @@
 import {Link} from 'react-router-dom'
-import {Redirect} from 'react-router-dom'
 
 
-function Journals({id, title, description, user, deleteJournal}) {
+function Journals({id, title, description, deleteJournal}) {
 
     function handleDelete() {
         fetch(`/journals/${id}`, {
             method: "DELETE"
         })
         deleteJournal(id)
-    }
-
-    function handleUpdate() {
-
     }
 
     return (

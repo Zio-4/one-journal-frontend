@@ -2,7 +2,7 @@ import {useState} from 'react'
 import {useParams, useHistory} from 'react-router-dom'
 import {Redirect} from 'react-router-dom'
 
-function NewJournalPost({user, addJournalPost}) {
+function NewJournalPost({user}) {
     const params = useParams()
     const history = useHistory()
     const [errors, setErrors] = useState([])
@@ -16,7 +16,6 @@ function NewJournalPost({user, addJournalPost}) {
     }
 
 
-    // user.id for journal_id?
     function handleSubmit(e) {
         e.preventDefault()
         fetch("/journal_posts", {
@@ -27,13 +26,14 @@ function NewJournalPost({user, addJournalPost}) {
           },
           body: JSON.stringify({
               title: form.title,
-              content: form.title,
+              content: form.content,
               journal_id: params.id
           }),
         })
           .then((r) => {
             if (r.ok) {
               r.json().then((data) => {
+                  console.log("New journal post data:", data)
                 setForm({
                     title: "",
                     content: ""
@@ -61,10 +61,10 @@ function NewJournalPost({user, addJournalPost}) {
                     <form className="ui large form" onSubmit={handleSubmit}>
                         <div className="ui stacked segment">
                             <div className="field">
-                                <input type="text" name="title" placeholder="Post Title (Optional)" onChange={handleChange}/>
+                                <input type="text" name="title" value={form.title} placeholder="Post Title (Optional)" onChange={handleChange}/>
                             </div>
                             <div className="field">
-                                <textarea placeholder="Content" name="content" rows="2" onChange={handleChange}/>
+                                <textarea placeholder="Content" name="content" value={form.content} rows="2" onChange={handleChange}/>
                             </div>
                             <button className="ui fluid large orange submit button" type="submit">Post</button>
                         </div>                        

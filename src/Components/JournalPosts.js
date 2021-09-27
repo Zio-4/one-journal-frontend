@@ -1,7 +1,6 @@
 import {Link} from 'react-router-dom'
-import {Redirect} from 'react-router-dom'
 
-function JournalPosts({title, date, summary, postID, journalID, user}) {
+function JournalPosts({title, date, summary, postID, journalID}) {
 
     return (
             <div className="ui segment">

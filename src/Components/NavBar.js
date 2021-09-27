@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link, useHistory} from 'react-router-dom'
 
-function NavBar({onLogout, user}) {
+function NavBar({onLogout}) {
     const history = useHistory()
 
     function logoutUser() {

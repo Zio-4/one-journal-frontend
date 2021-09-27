@@ -3,7 +3,6 @@ import {useEffect, useState} from 'react'
 import {Redirect} from 'react-router-dom'
 
 function JournalPostPage({user}) {
-    const params = useParams()
     let { jid } = useParams()
     let { id } = useParams()
     const [journalPost, setJournalPost] = useState(null)
@@ -17,7 +16,9 @@ function JournalPostPage({user}) {
     .then(data => {
       setJournalPost(data)
     })
-}, [])
+}, [jid, id])
+
+// adding dependencies for useEffect hook
 
     if (!user) {
         return <Redirect to="/login" /> 
