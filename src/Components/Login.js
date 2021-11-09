@@ -30,16 +30,20 @@ function Login({onLogin, clearErrors, user}) {
             body: JSON.stringify(form)
         }).then((r) => {
             if (r.ok) {
-                r.json().then((user) => {
-                    onLogin(user)})
+                r.json().then((userData) => {
+                    onLogin(userData)})
                     history.push("/")
             } else {
                 r.json().then((err) => {
-                    setErrors(err.errors)
+                    setErrors(err.error)
                 })
             }
         })
     }
+    
+    console.log("errors:", errors)
+    console.log("errors length:", errors.length)
+    console.log("errors:", errors)
 
     if (user) {
         return <Redirect to="/" /> 
@@ -76,9 +80,7 @@ function Login({onLogin, clearErrors, user}) {
                     </div>
                 </div>
             </div>
-            {errors.length > 0 ? <div className="ui error message">
-                {errors.length > 0 ? errors.map((error) => <h3>{error}</h3>) : null}
-            </div> : null}
+            {errors.length > 0 ? <div className="ui error message"><h3>{errors}</h3></div> : null}
         </>
     )
 }
