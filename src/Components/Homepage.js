@@ -11,6 +11,7 @@ function Homepage({user, setJournals, journals, deleteJournal}) {
       fetch("/journals")
       .then(res => res.json())
       .then(data => {
+        console.log(data)
         setJournals(data)
       })
   }, [])
