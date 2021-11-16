@@ -10,16 +10,23 @@ function Homepage({user, setJournals, journals, deleteJournal}) {
     useEffect(() => {
       fetch("/journals")
       .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        setJournals(data)
+      .then(journalData => {
+        console.log("journal data", journalData)
+        setJournals(journalData)
       })
-  }, [])
+  }, [setJournals])
 
     if (!journals) return <Loading />
   
-
-    const renderedJournals = journals.map(j => <Journals key={j.id} title={j.title} description={j.description} id={j.id} deleteJournal={deleteJournal}/>)
+    const renderJournals = () => {
+      if (journals.length > 0) {
+        return journals.map(j => <Journals key={j.id} title={j.title} description={j.description} id={j.id} deleteJournal={deleteJournal}/>)
+      } else {
+        console.log("hit else")
+        return <h3>You have not created any journals yet!</h3>
+      }
+    }
+    // const renderedJournals = journals.map(j => <Journals key={j.id} title={j.title} description={j.description} id={j.id} deleteJournal={deleteJournal}/>)
 
     if (!user) {
         return <Redirect to="/login" /> 
@@ -29,7 +36,7 @@ function Homepage({user, setJournals, journals, deleteJournal}) {
         <h2>How was your day today, {user.name}?</h2>
         {date.toDateString()}
         <h2>Journals</h2>
-        {renderedJournals}
+        {renderJournals()}
         <Link to='/journals/new' className="ui orange button">Create New Journal</Link>
        </>
     )

@@ -36,7 +36,6 @@ function SignUp({onLogin, user}) {
         }).then((r) => {
                 if (r.ok) {
                 r.json().then((data) => {
-                    console.log("Sign up data:", data)
                     onLogin(data)
                     setForm({
                         name: "",
@@ -89,7 +88,7 @@ function SignUp({onLogin, user}) {
                 </div>
             </div>
                {errors.length > 0 ? <div className="ui error message">
-                    {(errors.length > 0) ? errors.map((error) => <p>{error}</p>) : null}
+                    {errors.length > 0 ? errors.map((error) => <p key={error}>{error}</p>) : null}
                  </div> : null}
         </div>
     )

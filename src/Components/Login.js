@@ -40,10 +40,6 @@ function Login({onLogin, clearErrors, user}) {
             }
         })
     }
-    
-    console.log("errors:", errors)
-    console.log("errors length:", errors.length)
-    console.log("errors:", errors)
 
     if (user) {
         return <Redirect to="/" /> 
