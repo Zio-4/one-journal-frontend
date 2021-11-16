@@ -11,7 +11,7 @@ function Journals({id, title, description, deleteJournal}) {
     }
 
     return (
-            <div className="ui segment">
+            <div className="ui container segment">
                 <Link to={`/journals/${id}`}> <h2 className="ui left floated header">{title}</h2> 
                 <div className="ui clearing divider"></div></Link> 
                 <p className="ui left floated paragraph">{description}</p>

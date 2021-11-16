@@ -73,17 +73,20 @@ function UpdateJournal({clearErrors}) {
                             Update journal
                         </div>
                     </h2>
-                    <form className="ui large form" onSubmit={handleSubmit}>
-                        <div className="ui stacked segment">
-                            <div className="field">
-                                <input type="text" name="title" value={form.title} placeholder={title}  onChange={handleChange}/>
+
+                    <div className="ui container">
+                        <form className="ui large form" onSubmit={handleSubmit}>
+                            <div className="ui stacked segment">
+                                <div className="field">
+                                    <input type="text" name="title" value={form.title} placeholder={title}  onChange={handleChange}/>
+                                </div>
+                                <div className="field">
+                                    <textarea  name="description" rows="2" value={form.description} placeholder={description} onChange={handleChange}/>
+                                </div>
+                                <button className="ui fluid large orange submit button">Update</button>
                             </div>
-                            <div className="field">
-                                <textarea  name="description" rows="2" value={form.description} placeholder={description} onChange={handleChange}/>
-                            </div>
-                            <button className="ui fluid large orange submit button">Update</button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
             {errors.length > 0 ? <div className="ui error message">{errors.length > 0 ? errors.map((error) => <p>{error}</p>) : null}</div> : null}

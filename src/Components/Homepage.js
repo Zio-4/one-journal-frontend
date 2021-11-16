@@ -26,7 +26,6 @@ function Homepage({user, setJournals, journals, deleteJournal}) {
         return <h3>You have not created any journals yet!</h3>
       }
     }
-    // const renderedJournals = journals.map(j => <Journals key={j.id} title={j.title} description={j.description} id={j.id} deleteJournal={deleteJournal}/>)
 
     if (!user) {
         return <Redirect to="/login" /> 

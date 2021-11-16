@@ -63,26 +63,27 @@ function SignUp({onLogin, user}) {
                         </div>
                     </h2>
                     <p>A password must have one uppercase letter, one lowercase letter, one digit, and one special character!</p>
-                    <form className="ui large form" onSubmit={handleSubmit}>
-                        <div className="ui stacked segment">
-                            <div className="field">
-                                    <input type="text" name="username" placeholder="Username" value={form.username} onChange={handleChange}/>
-                            </div>
-                            <div className="field">
-                                <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange}/>
-                            </div>
-                            <div className="field">
-                                <input type="password" name="password_confirmation" placeholder="Confirm Password" value={form.password_confirmation} onChange={handleChange}/>
-                            </div>
-                            <div className="field">
-                                <input type="text" name="name" placeholder="First Name" value={form.personName} onChange={handleChange}/>
-                            </div>
-                            <button className="ui fluid large orange submit button" type="submit">Sign Up</button>
-                        </div>
 
-                        
-                    </form>
-                    <div className="ui message">
+                        <div className="ui container centered">
+                            <form className="ui form" id="signup-form" onSubmit={handleSubmit}>
+                                <div className="ui stacked segment">
+                                    <div className="field">
+                                        <input type="text" name="username" placeholder="Username" value={form.username} onChange={handleChange}/>
+                                    </div>
+                                    <div className="field">
+                                        <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange}/>
+                                    </div>
+                                    <div className="field">
+                                        <input type="password" name="password_confirmation" placeholder="Confirm Password" value={form.password_confirmation} onChange={handleChange}/>
+                                    </div>
+                                    <div className="field">
+                                        <input type="text" name="name" placeholder="First Name" value={form.personName} onChange={handleChange}/>
+                                    </div>
+                                    <button className="ui fluid large orange submit button" type="submit">Sign Up</button>
+                                </div>
+                            </form>
+                        </div>
+                    <div className="ui container centered message">
                         Already have an account? <Link to='/login'>Sign In</Link>
                     </div>
                 </div>

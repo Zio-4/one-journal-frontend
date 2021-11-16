@@ -58,17 +58,20 @@ function NewJournalPost({user}) {
                             New journal post
                         </div>
                     </h2>
-                    <form className="ui large form" onSubmit={handleSubmit}>
-                        <div className="ui stacked segment">
-                            <div className="field">
-                                <input type="text" name="title" value={form.title} placeholder="Post Title (Optional)" onChange={handleChange}/>
-                            </div>
-                            <div className="field">
-                                <textarea placeholder="Content" name="content" value={form.content} rows="2" onChange={handleChange}/>
-                            </div>
-                            <button className="ui fluid large orange submit button" type="submit">Post</button>
-                        </div>                        
-                    </form>
+                    
+                    <div className="ui container">
+                        <form className="ui large form" onSubmit={handleSubmit}>
+                            <div className="ui stacked segment">
+                                <div className="field">
+                                    <input type="text" name="title" value={form.title} placeholder="Post Title (Optional)" onChange={handleChange}/>
+                                </div>
+                                <div className="field">
+                                    <textarea placeholder="Content" name="content" value={form.content} rows="2" onChange={handleChange}/>
+                                </div>
+                                <button className="ui fluid large orange submit button" type="submit">Post</button>
+                            </div>                        
+                        </form>
+                    </div>
                 </div>
             </div>
             {errors.length > 0 ? <div className="ui error message">{errors.length > 0 ? errors.map((error) => <p>{error}</p>) : null}</div> : null}

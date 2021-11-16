@@ -53,6 +53,7 @@ function Login({onLogin, clearErrors, user}) {
                             Log-in to your account
                         </div>
                     </h2>
+                    <div className="ui container">
                     <form className="ui large form" onSubmit={handleSubmit}>
                         <div className="ui stacked segment">
                             <div className="field">
@@ -70,13 +71,14 @@ function Login({onLogin, clearErrors, user}) {
                             <button className="ui fluid large orange submit button" type="submit">Login</button>
                         </div>
                     </form>
+                    </div>
 
-                    <div className="ui message">
+                    <div className="ui container message">
                         Don't have an account? <Link to='/signup'>Sign Up</Link> 
                     </div>
                 </div>
             </div>
-            {errors.length > 0 ? <div className="ui error message"><h3>{errors}</h3></div> : null}
+            {errors.length > 0 ? <div className="ui container error message"><h3>{errors}</h3></div> : null}
         </>
     )
 }

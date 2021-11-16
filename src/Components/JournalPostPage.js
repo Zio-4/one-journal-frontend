@@ -39,7 +39,7 @@ function JournalPostPage({user}) {
             <input className="ui orange button" type="button" value="Back to Journal" onClick={handleClick}/>
             <p className="ui header">{title}</p>
             <p className="ui content">{post_date}</p> 
-            <div className="ui raised segment">
+            <div className="ui raised segment container">
                 <p>{content}</p>
             </div>
         </>
