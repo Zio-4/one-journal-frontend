@@ -6,11 +6,11 @@ A simple journal app for reflecting on your day
 
 One Journal is an app that lets you create journals for any topic you want to write about.
 
-<!-- ![Screenshot](src/Images/Journals_Example.png) -->
+![Screenshot](src/Images/Journals_Example.png)
 
 Create journal posts in a journal for anything you wish, and ponder over the happenings of today. 
 
-<!-- ![Screenshot](src/Images/Journal_Posts_Example.png) -->
+![Screenshot](src/Images/Journal_Posts_Example.png)
 
 ## Install your own copy 
 
